@@ -14,7 +14,7 @@ class LinkedList
 private:
 	Node<T>* head;
 	Node<T>* tail;
-	
+
 	void DeleteNextNode(Node<T>* node)
 	{
 		if (node->next != nullptr)
@@ -30,7 +30,7 @@ public:
 
 		friend class LinkedList;
 	public:
-		T* Data() 
+		T* Data()
 		{
 			return &(node->data);
 		}
@@ -48,7 +48,7 @@ public:
 	};
 
 	int count;
-	
+
 	LinkedList() : count(0), head(nullptr) { }
 	~LinkedList()
 	{
@@ -72,6 +72,16 @@ public:
 		iter.node = nullptr;
 		iter.prevNode = tail;
 		return iter;
+	}
+
+	T* Front()
+	{
+		return head->data;
+	}
+
+	T* Back()
+	{
+		return tail->data;
 	}
 
 	void PushBack(T data)
