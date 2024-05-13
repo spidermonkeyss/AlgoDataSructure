@@ -4,7 +4,16 @@ template <class T>
 class Node
 {
 public:
-	T data;
+	Node<T>()
+	{
+		data = nullptr;
+	}
+	~Node<T>()
+	{
+		if (data != nullptr)
+			delete data;
+	}
+	T* data;
 	Node* next = nullptr;
 };
 
@@ -32,10 +41,10 @@ public:
 	public:
 		T* Data()
 		{
-			return &(node->data);
+			return (node->data);
 		}
 
-		void operator++(T)
+		void operator++()
 		{
 			prevNode = node;
 			node = node->next;
@@ -84,19 +93,20 @@ public:
 		return tail->data;
 	}
 
-	void PushBack(T data)
+	void PushBack(T* data)
 	{
 		if (head == nullptr)
 		{
 			head = new Node<T>;
-			head->data = data;
+			head->data = std::move(data);
 			head->next = nullptr;
 			tail = head;
 		}
 		else
 		{
 			Node<T>* node = new Node<T>;
-			node->data = data;
+			node->data = std::move(data);
+
 			node->next = nullptr;
 			tail->next = node;
 			tail = node;
@@ -112,5 +122,20 @@ public:
 		iter->node = prevNode;
 		count--;
 		delete nodeToRemove;
+	}
+
+	T* At(unsigned int index)
+	{
+		if (index >= count)
+		{
+			printf("index larger than Linked List count");
+			return nullptr;
+		}
+		Iterator iter = Begin();
+		for (int i = 0; i < index; i++)
+		{
+			++iter;
+		}
+		return iter.Data();
 	}
 };
